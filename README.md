@@ -1,4 +1,4 @@
-# xc-components-v3
+# xm-components-v3
 
 ## Getting Started
 

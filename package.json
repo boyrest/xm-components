@@ -1,6 +1,6 @@
 {
   "private": false,
-  "name": "xc-components-v3",
+  "name": "xm-components-v3",
   "version": "0.0.1",
   "description": "react components base on antd",
   "author": "baron zhu",
@@ -10,12 +10,14 @@
     "React",
     "Component",
     "CURD",
-    "antd3"
+    "antd3",
+    "antd form render",
+    "ProTable"
   ],
-  "homepage": "https://github.com/boyrest/xc-components",
+  "homepage": "https://github.com/boyrest/xm-components",
   "repository": {
     "type": "git",
-    "url": "https://github.com/boyrest/xc-components.git"
+    "url": "https://github.com/boyrest/xm-components.git"
   },
   "files": [
     "es"

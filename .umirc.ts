@@ -1,7 +1,7 @@
 import { defineConfig } from 'dumi';
 
 export default defineConfig({
-  title: 'xc-components-v3',
+  title: 'xm-components-v3',
   favicon:
     'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
   logo: 'https://user-images.githubusercontent.com/9554297/83762004-a0761b00-a6a9-11ea-83b4-9c8ff721d4b8.png',
@@ -9,7 +9,7 @@ export default defineConfig({
   mode: 'site',
   lessLoader: {
     modifyVars: {
-      '@xc-prefix': 'xc-components',
+      '@xc-prefix': 'xm-components',
     },
     javascriptEnabled: true,
   },

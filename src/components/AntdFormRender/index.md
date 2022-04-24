@@ -17,7 +17,7 @@ title: AntdFormRender 动态渲染表单
 
 ```tsx
 import React, { useRef } from 'react';
-import { AntdFormRender } from 'xc-components-v3';
+import { AntdFormRender } from 'xm-components-v3';
 import { Form, Button, Input } from 'antd';
 
 export default Form.create()((props) => {
@@ -69,7 +69,7 @@ export default Form.create()((props) => {
 ```tsx
 import React, { useState, useRef } from 'react';
 import { Form, Button, Input, Radio } from 'antd';
-import { AntdFormRender } from 'xc-components-v3';
+import { AntdFormRender } from 'xm-components-v3';
 
 export default Form.create()((props) => {
   const { form } = props;
@@ -110,7 +110,7 @@ export default Form.create()((props) => {
 ```tsx
 import React from 'react';
 import { Input, Radio, Form, Space, Button } from 'antd';
-import { AntdFormRender } from 'xc-components-v3';
+import { AntdFormRender } from 'xm-components-v3';
 
 export default Form.create()((props) => {
   const { form } = props;
@@ -189,7 +189,7 @@ export default Form.create()((props) => {
 
 ```tsx
 import React, { useEffect, useRef } from 'react';
-import { AntdFormRender } from 'xc-components-v3';
+import { AntdFormRender } from 'xm-components-v3';
 import { Form, Input, Radio } from 'antd';
 
 export default Form.create()((props) => {
