@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from 'react';
+import React from 'react';
 import { Row, Form } from 'antd';
 import { FormRenderProps, Item } from './Types';
 import ItemRender from './ItemRender';
@@ -67,6 +67,7 @@ const FormRenderer: React.FC<FormRenderProps & FormComponentProps> = ({
   cols = 1,
   formData = {},
   form,
+  layoutType = 'autoLayout',
 }) => {
   let isOneDimensionArray = false;
 
@@ -122,11 +123,17 @@ const FormRenderer: React.FC<FormRenderProps & FormComponentProps> = ({
         renderTowDimensionLayout({ layoutData, form })
       ) : (
         <div className={getPrefixCls('antd-form-render')}>
-          <Row>
-            {(layoutData as Item[]).map((item, idx) => (
-              <ItemRender item={item} key={idx} span={24} layoutType="row" form={form} />
-            ))}
-          </Row>
+          {layoutType === 'normal' ? (
+            (layoutData as Item[]).map((item, idx) => (
+              <ItemRender item={item} key={idx} span={24} layoutType="space" form={form} />
+            ))
+          ) : (
+            <Row>
+              {(layoutData as Item[]).map((item, idx) => (
+                <ItemRender item={item} key={idx} span={24} layoutType="row" form={form} />
+              ))}
+            </Row>
+          )}
         </div>
       )}
     </Form>

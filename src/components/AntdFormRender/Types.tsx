@@ -30,6 +30,8 @@ export type Item = {
   visible?: () => boolean;
 };
 
+export type FormLayout = 'normal' | 'autoLayout';
+
 export type FormRenderProps = {
   /**
    * 1或2维数组，存储组件配置信息/自定义渲染组件
@@ -41,7 +43,12 @@ export type FormRenderProps = {
    */
   cols?: number;
 
-  formData: FormProps;
+  formData?: FormProps;
+
+  /**
+   *  normal form form item构成,
+   * */
+  layoutType?: FormLayout;
 };
 
 export type SpaceLayoutProps = {

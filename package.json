@@ -46,7 +46,11 @@
       "prettier --parser=typescript --write"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "immutable": "^4.0.0",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.1"
+  },
   "peerDependencies": {
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0",
@@ -68,7 +72,6 @@
     "react": ">=16.9.0",
     "react-dom": ">=16.9.0",
     "yorkie": "^2.0.0",
-    "antd": "^3.26.19",
-    "moment": "^2.29.1"
+    "antd": "^3.26.19"
   }
 }

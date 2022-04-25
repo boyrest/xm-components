@@ -13,6 +13,64 @@ title: AntdFormRender 动态渲染表单
 
 <h3>代码演示</h3>
 
+<h3>平铺</h3>
+
+```tsx
+import React, { useRef } from 'react';
+import { AntdFormRender } from 'xm-components-v3';
+import { Form, Button, Input } from 'antd';
+
+export default Form.create()((props) => {
+  const { form } = props;
+  const layoutData = [
+    {
+      type: Input,
+      name: 'tel',
+      label: '手机号',
+      elProps: {
+        maxLength: 11,
+        placeholder: '请输入',
+      },
+      itemProps: {
+        rules: [
+          { required: true, message: '请输入' },
+          { pattern: /^1\d{10}$/, message: '手机号必须为11位数字' },
+        ],
+      },
+    },
+    {
+      type: Input.Password,
+      label: '密码',
+      name: 'pwd',
+      elProps: {
+        placeholder: '请输入',
+      },
+      itemProps: {
+        rules: [{ required: true, message: '请输入' }],
+      },
+    },
+    {
+      render() {
+        return (
+          <Button type="primary" style={{ marginTop: 4 }}>
+            登录
+          </Button>
+        );
+      },
+    },
+  ];
+
+  return (
+    <AntdFormRender
+      form={form}
+      layoutData={layoutData}
+      formData={{ layout: 'inline' }}
+      layoutType="normal"
+    />
+  );
+});
+```
+
 <h3>一行一列排列</h3>
 
 ```tsx

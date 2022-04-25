@@ -9,7 +9,7 @@ export default defineConfig({
   mode: 'site',
   lessLoader: {
     modifyVars: {
-      '@xc-prefix': 'xm-components',
+      '@xm-prefix': 'xm-components',
     },
     javascriptEnabled: true,
   },

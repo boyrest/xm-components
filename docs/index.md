@@ -1,7 +1,7 @@
 ---
 hero:
   title: xm-components-v3
-  desc: xm-components-v3 site example
+  desc: 基于antd3 的react 组件库
   actions:
     - text: Getting Started
       link: /components
