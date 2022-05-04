@@ -16,19 +16,29 @@ title: ProTable 增删改查列表
 <h3>常用查询分页数据</h3>
 
 ```tsx
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { ProTable } from 'xm-components-v3';
-import { Form, Button, Input } from 'antd';
+import { Form, Button, Input, Row, Popconfirm } from 'antd';
+import queryString from 'query-string';
+
+interface DataItem {
+  body: string;
+  id: number;
+  title: string;
+  userId: number;
+}
 
 export default (props) => {
+  useEffect(() => {}, []);
   const filterData = [
     {
       type: Input,
-      name: 'name',
-      label: '姓名',
+      name: 'id',
+      label: '文章ID',
       elProps: {
         maxLength: 11,
-        placeholder: '请输入姓名',
+        placeholder: '请输入文章ID',
+        autoComplete: 'off',
       },
       itemProps: {
         labelCol: { span: 4 },
@@ -37,11 +47,12 @@ export default (props) => {
     },
     {
       type: Input,
-      name: 'age',
-      label: '年龄',
+      name: 'userId',
+      label: 'userID',
       elProps: {
         maxLength: 3,
-        placeholder: '请输入姓名',
+        placeholder: '请输入userID',
+        autoComplete: 'off',
       },
       itemProps: {
         labelCol: { span: 4 },
@@ -51,22 +62,91 @@ export default (props) => {
   ];
   const columns = [
     {
-      title: '姓名',
-      dataIndex: 'name',
-      key: 'name',
+      title: '文章ID',
+      dataIndex: 'id',
+      key: 'id',
+      width: 100,
     },
     {
-      title: '年龄',
-      dataIndex: 'age',
-      key: 'age',
+      title: 'userID',
+      dataIndex: 'userId',
+      key: 'userId',
+      width: 100,
     },
     {
-      title: '住址',
-      dataIndex: 'address',
-      key: 'address',
+      title: '标题',
+      dataIndex: 'title',
+      key: 'title',
+      ellipsis: true,
+    },
+    {
+      title: '内容',
+      dataIndex: 'body',
+      key: 'body',
+      ellipsis: true,
+    },
+    {
+      title: '操作',
+      dataIndex: 'actions',
+      width: 100,
+      fixed: 'right',
+      render: (value, record) => {
+        return (
+          <Row>
+            <span
+              onClick={() => {
+                drawerRef.current.open(record);
+              }}
+            >
+              编辑
+            </span>
+            <Popconfirm
+              icon={null}
+              placement="topRight"
+              title="确认删除该记录吗？"
+              onConfirm={() => handleDel(record.id)}
+              okText="删除"
+              cancelText="取消"
+            >
+              <span>删除</span>
+            </Popconfirm>
+          </Row>
+        );
+      },
     },
   ];
 
-  return <ProTable filterProps={{ layoutData: filterData, cols: 3 }} tableProps={{ columns }} />;
+  function handleDel() {}
+
+  const ProTableComponent = ProTable<DataItem>();
+
+  return (
+    <ProTableComponent
+      filterProps={{ layoutData: filterData, cols: 3 }}
+      tableProps={{ columns }}
+      request={async (searchFilters, pagination, tableFilter) => {
+        console.log(searchFilters, pagination, tableFilter, '=======');
+        const params = { ...searchFilters, _limit: pagination.pageSize, _page: pagination.current };
+        const paramString = queryString.stringify(params);
+        const response = await fetch(`http://jsonplaceholder.typicode.com/posts?${paramString}`, {
+          method: 'GET',
+          mode: 'cors',
+        });
+        const data = await response.json();
+        console.log(data, '=====data======');
+        return {
+          total: 100,
+          data,
+        };
+      }}
+      onError={(e) => {
+        console.log(e);
+      }}
+    >
+      <div>
+        <Button type="primary">创建新的文章</Button>
+      </div>
+    </ProTableComponent>
+  );
 };
 ```
