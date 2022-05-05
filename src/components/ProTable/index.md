@@ -125,7 +125,7 @@ export default (props) => {
         console.log(searchFilters, pagination, tableFilter, '=======');
         const params = { ...searchFilters, _limit: pagination.pageSize, _page: pagination.current };
         const paramString = queryString.stringify(params);
-        const response = await fetch(`http://jsonplaceholder.typicode.com/posts?${paramString}`, {
+        const response = await fetch(`https://jsonplaceholder.typicode.com/posts?${paramString}`, {
           method: 'GET',
           mode: 'cors',
         });

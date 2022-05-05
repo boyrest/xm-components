@@ -8,6 +8,8 @@ export default defineConfig({
   outputPath: 'docs-dist',
   mode: 'site',
   publicPath: process.env.NODE_ENV === 'production' ? './' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/xm-components' : '/',
+  hash: true,
   lessLoader: {
     modifyVars: {
       '@xm-prefix': 'xm-components',
