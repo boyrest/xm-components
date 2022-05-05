@@ -122,7 +122,6 @@ export default (props) => {
       filterProps={{ layoutData: filterData, cols: 3 }}
       tableProps={{ columns }}
       request={async (searchFilters, sorter, pagination, tableFilter) => {
-        console.log(searchFilters, pagination, tableFilter, '=======');
         const params = { ...searchFilters, _limit: pagination.pageSize, _page: pagination.current };
         const paramString = queryString.stringify(params);
         const response = await fetch(`https://jsonplaceholder.typicode.com/posts?${paramString}`, {
@@ -130,14 +129,13 @@ export default (props) => {
           mode: 'cors',
         });
         const data = await response.json();
-        console.log(data, '=====data======');
         return {
           total: 100,
           data,
         };
       }}
       onError={(e) => {
-        console.log(e);
+        message.error(JSON.stringify(e));
       }}
       ref={tableRef}
     >
