@@ -18,7 +18,7 @@ export type RequestPagination = {
 };
 
 export type IProTable<T> = {
-  filterProps: Omit<IFilterProps, 'loading'>;
+  filterProps?: Omit<IFilterProps, 'loading'>;
   tableProps: TableProps<T> & { paginationDisplayCount: number | undefined };
   request: (
     searchFilters: Record<string, unknown> | null,
