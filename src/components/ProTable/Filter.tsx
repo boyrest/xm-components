@@ -62,15 +62,21 @@ const Filter = forwardRef<FilterRef, IFilterProps & FormComponentProps<Record<st
                     onSearch && onSearch(form.getFieldsValue());
                   }}
                   className={`${prefixClass}-submit`}
+                  loading={loading}
                 >
                   {SearchButtonText}
                 </Button>
                 <Button
                   onClick={() => {
-                    form.resetFields();
-                    onReset && onReset(form.getFieldsValue());
+                    if (!loading) {
+                      form.resetFields();
+                      onReset && onReset(form.getFieldsValue());
+                    }
                   }}
                   className={`${prefixClass}-reset`}
+                  style={{
+                    cursor: loading ? 'not-allowed' : 'pointer',
+                  }}
                 >
                   {ResetButtonText}
                 </Button>
@@ -84,7 +90,7 @@ const Filter = forwardRef<FilterRef, IFilterProps & FormComponentProps<Record<st
         // @ts-ignore
         setFilterData([...layoutData]);
       }
-    }, [layoutData, defaultButtons, onSearch, onReset]);
+    }, [layoutData, defaultButtons, loading, onSearch, onReset]);
 
     return (
       <AntdFormRender
