@@ -1,33 +1,15 @@
 # xm-components-v3
 
-## Getting Started
+基于 antd3 的 react 组件，包括 curd 列表，form render
 
-Install dependencies,
+# install
 
 ```bash
-$ npm i
+$ npm i xm-components-v3
 ```
 
-Start the dev server,
+# doc online
 
 ```bash
-$ npm start
-```
-
-Build documentation,
-
-```bash
-$ npm run docs:build
-```
-
-Run test,
-
-```bash
-$ npm test
-```
-
-Build library via `father-build`,
-
-```bash
-$ npm run build
+https://boyrest.github.io/xm-components/
 ```
