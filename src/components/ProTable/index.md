@@ -8,7 +8,7 @@ title: ProTable 增删改查列表
 <h2>ProTable 增删改查列表</h2>
 
 <p>
- 基于antd3，AntdFormRender,创建的增删改查列表
+ 基于antd3，AntdFormRender的CURD列表
 </p>
 
 <h3>代码演示</h3>
@@ -18,7 +18,7 @@ title: ProTable 增删改查列表
 ```tsx
 import React, { useEffect, useRef } from 'react';
 import { ProTable } from 'xm-components-v3';
-import { Form, Button, Input, Row, Popconfirm } from 'antd';
+import { Form, Button, Input, Row, Popconfirm, message } from 'antd';
 import queryString from 'query-string';
 
 interface DataItem {
@@ -29,6 +29,7 @@ interface DataItem {
 }
 
 export default (props) => {
+  const tableRef = useRef(null);
   useEffect(() => {}, []);
   const filterData = [
     {
@@ -93,13 +94,6 @@ export default (props) => {
       render: (value, record) => {
         return (
           <Row>
-            <span
-              onClick={() => {
-                drawerRef.current.open(record);
-              }}
-            >
-              编辑
-            </span>
             <Popconfirm
               icon={null}
               placement="topRight"
@@ -108,7 +102,7 @@ export default (props) => {
               okText="删除"
               cancelText="取消"
             >
-              <span>删除</span>
+              <span style={{ color: '#1890ff', cursor: 'pointer' }}>删除</span>
             </Popconfirm>
           </Row>
         );
@@ -116,7 +110,10 @@ export default (props) => {
     },
   ];
 
-  function handleDel() {}
+  function handleDel() {
+    message.success('删除成功');
+    tableRef.current.delRefresh();
+  }
 
   const ProTableComponent = ProTable<DataItem>();
 
@@ -142,9 +139,19 @@ export default (props) => {
       onError={(e) => {
         console.log(e);
       }}
+      ref={tableRef}
     >
       <div>
-        <Button type="primary">创建新的文章</Button>
+        <Button
+          type="primary"
+          style={{ marginBottom: '20px' }}
+          onClick={() => {
+            message.success('创建成功');
+            tableRef.current.addRefresh();
+          }}
+        >
+          创建新的文章
+        </Button>
       </div>
     </ProTableComponent>
   );

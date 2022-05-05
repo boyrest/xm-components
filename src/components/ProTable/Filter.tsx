@@ -14,9 +14,9 @@ export type IFilterProps = {
   /** 使用默认查询按钮 */
   defaultButtons?: boolean;
   /** 查询点击后回调事件 */
-  onSearch: (filters: unknown) => void;
+  onSearch: (filters: Record<string, unknown>) => void;
   /** 查询点击后回调事件 */
-  onReset: (filters: unknown) => void;
+  onReset: (filters: Record<string, unknown> | null) => void;
   /** 是否在查询 */
   loading: boolean;
   /** prefix class name*/
