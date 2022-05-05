@@ -61,7 +61,6 @@ const Filter = forwardRef<FilterRef, IFilterProps & FormComponentProps<Record<st
                   onClick={() => {
                     onSearch && onSearch(form.getFieldsValue());
                   }}
-                  loading={loading}
                   className={`${prefixClass}-submit`}
                 >
                   {SearchButtonText}
@@ -85,7 +84,7 @@ const Filter = forwardRef<FilterRef, IFilterProps & FormComponentProps<Record<st
         // @ts-ignore
         setFilterData([...layoutData]);
       }
-    }, [layoutData, defaultButtons]);
+    }, [layoutData, defaultButtons, onSearch, onReset]);
 
     return (
       <AntdFormRender
