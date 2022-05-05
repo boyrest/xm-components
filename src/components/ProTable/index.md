@@ -121,7 +121,7 @@ export default (props) => {
     <ProTableComponent
       filterProps={{ layoutData: filterData, cols: 3 }}
       tableProps={{ columns }}
-      request={async (searchFilters, pagination, tableFilter) => {
+      request={async (searchFilters, sorter, pagination, tableFilter) => {
         console.log(searchFilters, pagination, tableFilter, '=======');
         const params = { ...searchFilters, _limit: pagination.pageSize, _page: pagination.current };
         const paramString = queryString.stringify(params);

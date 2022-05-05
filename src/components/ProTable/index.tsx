@@ -22,6 +22,7 @@ export type IProTable<T> = {
   tableProps: TableProps<T> & { paginationDisplayCount: number | undefined };
   request: (
     searchFilters: Record<string, unknown> | null,
+    sorter: SorterResult<T> | {},
     pagination: RequestPagination,
     tableFilter: Partial<Record<keyof T, string[]>>,
   ) => Promise<RequestResult<T>>;
@@ -56,7 +57,7 @@ const ProTable = function <T>() {
     async function getData() {
       setLoading(true);
       try {
-        const result = await request(filters, { current, pageSize }, tableFilters);
+        const result = await request(filters, sorter, { current, pageSize }, tableFilters);
         setTotal(result.total);
         setList(result.data);
       } catch (e: unknown) {

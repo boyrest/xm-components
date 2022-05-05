@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "xm-components-v3",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "react components base on antd",
   "author": "baron zhu",
   "license": "MIT",
@@ -11,6 +11,7 @@
     "Component",
     "CURD",
     "antd3",
+    "antd3 form render",
     "antd form render",
     "ProTable"
   ],
