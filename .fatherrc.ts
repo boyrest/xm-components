@@ -1,10 +1,9 @@
 export default {
   esm: 'babel',
-  cssModules: true,
-  extractCSS: true,
-  lessInRollupMode: {
-    modifyVars: {
+  lessInBabelMode: {
+    globalVars: {
       '@xm-prefix': 'xm-components',
     },
+    javascriptEnabled: true,
   },
 };
