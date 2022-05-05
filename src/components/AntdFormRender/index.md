@@ -1,7 +1,7 @@
 ---
 group:
   title: 数据录入
-  order: 1
+  order: 2
 title: AntdFormRender 动态渲染表单
 ---
 
