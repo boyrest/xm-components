@@ -46,18 +46,21 @@ const ProTable = function <T>() {
     const [current, setCurrent] = useState(paginationSetting.current || 1);
     const [total, setTotal] = useState(0);
     const [pageSize, setPageSize] = useState(paginationSetting.pageSize || 10);
-    const [tableFilters, setTableFilters] = useState<Partial<Record<keyof T, string[]>>>({});
-    const [sorter, setSorter] = useState<SorterResult<T> | {}>({});
-    const [filters, setFilters] = useState<Record<string, unknown> | null>(null);
+    const tableFiltersRef = useRef<Partial<Record<keyof T, string[]>>>({});
+    const sorterRef = useRef<SorterResult<T> | {}>({});
+    const filtersRef = useRef<Record<string, unknown> | null>(null);
     const [list, setList] = useState<T[]>([]);
+    const filterRef = useRef<FilterRef | null>(null);
 
-    const timeRef = useRef<number | null>(null);
-    const filterRef = useRef<FilterRef>(null);
-
-    async function getData() {
+    async function getData(current, pageSize) {
       setLoading(true);
       try {
-        const result = await request(filters, sorter, { current, pageSize }, tableFilters);
+        const result = await request(
+          filtersRef.current,
+          sorterRef.current,
+          { current, pageSize },
+          tableFiltersRef.current,
+        );
         setTotal(result.total);
         setList(result.data);
       } catch (e: unknown) {
@@ -70,29 +73,32 @@ const ProTable = function <T>() {
     useImperativeHandle<ProTableRef, ProTableRef>(ref, () => ({
       delRefresh: () => {
         if (current === 1) {
-          getData();
+          getData(current, pageSize);
         } else {
           const preCount = (current - 1) * pageSize;
           if (preCount + 1 === total) {
+            getData(current - 1, pageSize);
             setCurrent(current - 1);
           } else {
-            getData();
+            getData(current, pageSize);
           }
         }
       },
       refresh: () => {
-        getData();
+        getData(current, pageSize);
       },
       addRefresh: () => {
         if (current !== 1) {
+          getData(1, pageSize);
           setCurrent(1);
         } else {
-          getData();
+          getData(current, pageSize);
         }
       },
       searchWithFilters: (value: Record<string, unknown> | null) => {
-        setFilters(value || {});
+        filtersRef.current = value || {};
         setCurrent(1);
+        getData(1, pageSize);
       },
       getFilterHandle: () => {
         return filterRef.current?.getFilterHandle() || null;
@@ -100,12 +106,8 @@ const ProTable = function <T>() {
     }));
 
     useEffect(() => {
-      if (timeRef.current) {
-        clearTimeout(timeRef.current);
-        timeRef.current = null;
-      }
-      timeRef.current = setTimeout(getData, 400);
-    }, [current, pageSize, tableFilters, filters, sorter]);
+      getData(current, pageSize);
+    }, []);
 
     function onChange(
       pagination: PaginationConfig,
@@ -116,25 +118,32 @@ const ProTable = function <T>() {
         pagination.current && setCurrent(pagination.current);
         pagination.pageSize && setPageSize(pagination.pageSize);
       }
-      if (!_.isEqual(newFilters, tableFilters) || !_.isEqual(newSorter, sorter)) {
+      const isFilterChange =
+        !_.isEqual(newFilters, tableFiltersRef.current) || !_.isEqual(newSorter, sorterRef.current);
+      if (isFilterChange) {
         setCurrent(1);
       }
-      if (!_.isEqual(newFilters, tableFilters)) {
-        setTableFilters(tableFilters);
+      if (!_.isEqual(newFilters, tableFiltersRef.current)) {
+        tableFiltersRef.current = newFilters;
       }
-      if (!_.isEqual(newSorter, sorter)) {
-        setSorter(newSorter);
+      if (!_.isEqual(newSorter, sorterRef.current)) {
+        sorterRef.current = newSorter;
       }
+      const currentValue = isFilterChange ? 1 : pagination?.current || current;
+      const currentPageSize = pagination?.pageSize || pageSize;
+      getData(currentValue, currentPageSize);
     }
 
     function onSearch(newFilters: Record<string, unknown>) {
-      setFilters(newFilters);
+      filtersRef.current = newFilters;
       setCurrent(1);
+      getData(1, pageSize);
     }
 
     function onReset(value: Record<string, unknown> | null) {
-      setFilters(value);
+      filtersRef.current = value;
       setCurrent(1);
+      getData(1, pageSize);
     }
 
     const paginationConfig: PaginationConfig | false =
