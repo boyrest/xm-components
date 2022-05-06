@@ -106,7 +106,10 @@ const ProTable = function <T>() {
     }));
 
     useEffect(() => {
-      getData(current, pageSize);
+      setTimeout(() => {
+        filtersRef.current = filterRef.current?.getFilterHandle()?.getFieldsValue() || null;
+        getData(current, pageSize);
+      }, 10);
     }, []);
 
     function onChange(
