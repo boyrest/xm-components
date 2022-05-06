@@ -52,7 +52,7 @@ const ProTable = function <T>() {
     const [list, setList] = useState<T[]>([]);
     const filterRef = useRef<FilterRef | null>(null);
 
-    async function getData(current, pageSize) {
+    async function getData(current: number, pageSize: number) {
       setLoading(true);
       try {
         const result = await request(
