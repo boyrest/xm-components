@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "xm-components-v3",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "description": "react components base on antd",
   "author": "baron zhu",
   "license": "MIT",
