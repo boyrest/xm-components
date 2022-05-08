@@ -38,7 +38,6 @@ export type IProTable<T> = {
   onError: (e: unknown) => void;
   actionRef?: React.Ref<ActionType | undefined>;
   children?: ReactNode | undefined;
-  paginationDisplayCount: number | undefined | boolean;
 };
 
 const ProTable = <T extends Record<string, any>>(props: IProTable<T>) => {
