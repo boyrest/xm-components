@@ -80,6 +80,7 @@ import { Form, Button, Input } from 'antd';
 
 export default Form.create()((props) => {
   const { form } = props;
+
   const layoutData = [
     {
       type: Input,
@@ -296,3 +297,5 @@ export default Form.create()((props) => {
   return <AntdFormRender form={form} layoutData={layoutData} />;
 });
 ```
+
+<API></API>
