@@ -40,6 +40,7 @@ const Filter = forwardRef<FilterRef, IFilterProps & FormComponentProps<Record<st
       onSearch,
       onReset,
       loading,
+      layoutType,
       prefixClass = getPrefixCls('pro-table-filter'),
     } = props;
     const [filterData, setFilterData] = useState([]);
@@ -100,6 +101,7 @@ const Filter = forwardRef<FilterRef, IFilterProps & FormComponentProps<Record<st
           ...formData,
         }}
         cols={cols}
+        layoutType={layoutType}
       />
     );
   },
