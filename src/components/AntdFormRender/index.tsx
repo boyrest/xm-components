@@ -103,7 +103,7 @@ const FormRenderer = <T extends Record<string, unknown>>({
         <div className={getPrefixCls('antd-form-render')}>
           {layoutType === 'normal' ? (
             (layoutData as Item[]).map((item, idx) => (
-              <ItemRender item={item} key={idx} span={24} layoutType="space" form={form} />
+              <ItemRender item={item} key={idx} span={24} layoutType="default" form={form} />
             ))
           ) : (
             <Row>
