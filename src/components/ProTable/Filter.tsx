@@ -6,7 +6,7 @@ import { FormRenderProps, Item } from '../AntdFormRender/Types';
 import { getPrefixCls } from '../../utils/tools';
 import './Filter.less';
 
-export type IFilterProps = {
+export type IFilterProps<T> = {
   /** 查询按钮文案 */
   SearchButtonText?: string;
   /** 重置按钮文案 */
@@ -21,90 +21,91 @@ export type IFilterProps = {
   loading: boolean;
   /** prefix class name*/
   prefixClass?: string;
-} & FormRenderProps;
+} & FormRenderProps<T>;
 
 export type FilterRef = {
   getFilterHandle: () => WrappedFormUtils;
 };
 
-const Filter = forwardRef<FilterRef, IFilterProps & FormComponentProps<Record<string, unknown>>>(
-  (props, ref) => {
-    const {
-      form,
-      SearchButtonText = '查询',
-      ResetButtonText = '重置',
-      defaultButtons = true,
-      layoutData,
-      cols,
-      formData,
-      onSearch,
-      onReset,
-      loading,
-      layoutType,
-      prefixClass = getPrefixCls('pro-table-filter'),
-    } = props;
-    const [filterData, setFilterData] = useState([]);
-    useImperativeHandle(ref, () => {
-      return {
-        getFilterHandle: () => {
-          return form;
+const Filter = forwardRef<
+  FilterRef,
+  IFilterProps<Record<string, unknown>> & FormComponentProps<Record<string, unknown>>
+>((props, ref) => {
+  const {
+    form,
+    SearchButtonText = '查询',
+    ResetButtonText = '重置',
+    defaultButtons = true,
+    layoutData,
+    cols,
+    formData,
+    onSearch,
+    onReset,
+    loading,
+    layoutType,
+    prefixClass = getPrefixCls('pro-table-filter'),
+  } = props;
+  const [filterData, setFilterData] = useState([]);
+  useImperativeHandle(ref, () => {
+    return {
+      getFilterHandle: () => {
+        return form;
+      },
+    };
+  });
+  useEffect(() => {
+    if (defaultButtons) {
+      const buttons: Item = {
+        render() {
+          return (
+            <div className={`${prefixClass}-actions`}>
+              <Button
+                type="primary"
+                onClick={() => {
+                  onSearch && onSearch(form.getFieldsValue());
+                }}
+                className={`${prefixClass}-submit`}
+                loading={loading}
+              >
+                {SearchButtonText}
+              </Button>
+              <Button
+                onClick={() => {
+                  if (!loading) {
+                    form.resetFields();
+                    onReset && onReset(form.getFieldsValue());
+                  }
+                }}
+                className={`${prefixClass}-reset`}
+                style={{
+                  cursor: loading ? 'not-allowed' : 'pointer',
+                }}
+              >
+                {ResetButtonText}
+              </Button>
+            </div>
+          );
         },
       };
-    });
-    useEffect(() => {
-      if (defaultButtons) {
-        const buttons: Item = {
-          render() {
-            return (
-              <div className={`${prefixClass}-actions`}>
-                <Button
-                  type="primary"
-                  onClick={() => {
-                    onSearch && onSearch(form.getFieldsValue());
-                  }}
-                  className={`${prefixClass}-submit`}
-                  loading={loading}
-                >
-                  {SearchButtonText}
-                </Button>
-                <Button
-                  onClick={() => {
-                    if (!loading) {
-                      form.resetFields();
-                      onReset && onReset(form.getFieldsValue());
-                    }
-                  }}
-                  className={`${prefixClass}-reset`}
-                  style={{
-                    cursor: loading ? 'not-allowed' : 'pointer',
-                  }}
-                >
-                  {ResetButtonText}
-                </Button>
-              </div>
-            );
-          },
-        };
-        // @ts-ignore
-        setFilterData([...layoutData, buttons]);
-      } else {
-        // @ts-ignore
-        setFilterData([...layoutData]);
-      }
-    }, [layoutData, defaultButtons, loading, onSearch, onReset]);
+      // @ts-ignore
+      setFilterData([...layoutData, buttons]);
+    } else {
+      // @ts-ignore
+      setFilterData([...layoutData]);
+    }
+  }, [layoutData, defaultButtons, loading, onSearch, onReset]);
 
-    return (
-      <AntdFormRender
-        form={form}
-        layoutData={filterData}
-        formData={{
-          ...formData,
-        }}
-        cols={cols}
-        layoutType={layoutType}
-      />
-    );
-  },
-);
+  return (
+    <AntdFormRender
+      form={form}
+      layoutData={filterData}
+      formData={{
+        ...formData,
+      }}
+      cols={cols}
+      layoutType={layoutType}
+    />
+  );
+});
 
-export default Form.create<IFilterProps & FormComponentProps>()(Filter);
+export default Form.create<IFilterProps<Record<string, unknown>> & FormComponentProps>()(Filter);

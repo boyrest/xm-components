@@ -30,7 +30,7 @@ export type Item = {
   visible?: () => boolean;
 };
 
-export type FormRenderProps = {
+export type FormRenderProps<T> = {
   /**
    * @description 1或2维数组，存储组件配置信息/自定义渲染组件。
    * 一维数组：从上往下一行放一个组件 ,设置了cols则一行显示cols(1/2/3/4)个组件
@@ -56,7 +56,7 @@ export type FormRenderProps = {
   /**
    * @description antd Form.create 实例
    */
-  form: WrappedFormUtils<unknown>;
+  form: WrappedFormUtils<T>;
 };
 
 export type SpaceLayoutProps = {
