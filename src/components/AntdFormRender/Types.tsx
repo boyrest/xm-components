@@ -1,5 +1,5 @@
 import React from 'react';
-import { FormProps, GetFieldDecoratorOptions } from 'antd/lib/form/Form';
+import { FormProps, GetFieldDecoratorOptions, WrappedFormUtils } from 'antd/lib/form/Form';
 
 export type Item = {
   /** 组件类型，比如Input,Button,"input"  */
@@ -30,25 +30,33 @@ export type Item = {
   visible?: () => boolean;
 };
 
-export type FormLayout = 'normal' | 'autoLayout';
-
-export type FormRenderProps = {
+export type FormRenderProps<T> = {
   /**
-   * 1或2维数组，存储组件配置信息/自定义渲染组件
+   * @description 1或2维数组，存储组件配置信息/自定义渲染组件。
+   * 一维数组：从上往下一行放一个组件 ,设置了cols则一行显示cols(1/2/3/4)个组件
+   * 二维数组:子数组配置的所有组件渲染为一行（不定列布局）,数组（或子数组）内组件会等分一行所占空间，内部采用Row,Col布局
    */
   layoutData: Item[] | Item[][];
 
   /**
-   * 定义一行渲染几个组件，layoutData为一维数组时生效, 可以是: 1 | 2 | 3 | 4, 默认1,
+   * @description 定义一行渲染几个组件，layoutData为一维数组时生效, 可以是: 1 | 2 | 3 | 4, 默认1,
    */
   cols?: number;
 
+  /**
+   * @description 定义antd <Form/>属性
+   */
   formData?: FormProps;
 
   /**
-   *  normal form form item构成,
+   * @description normal为流排布，autoLayout 为块排布配合cols使用
    * */
-  layoutType?: FormLayout;
+  layoutType?: LayoutType;
+
+  /**
+   * @description antd Form.create 实例
+   */
+  form: WrappedFormUtils<T>;
 };
 
 export type SpaceLayoutProps = {
@@ -59,4 +67,4 @@ export type SpaceLayoutProps = {
   form: any;
 };
 
-export type LayoutType = 'row' | 'space';
+export type LayoutType = 'normal' | 'row' | 'default';

@@ -28,7 +28,7 @@ export type ActionType = {
 
 export type IProTable<T> = {
   filterProps?: Omit<IFilterProps, 'loading'>;
-  tableProps: TableProps<T> & { paginationDisplayCount: number | undefined | boolean };
+  tableProps: TableProps<T> & { paginationDisplayCount?: number | boolean };
   request: (
     searchFilters: Record<string, unknown> | null,
     sorter: SorterResult<T> | {},
